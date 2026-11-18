@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PhishGuard AI - Admin Login</title>
+    <link rel="stylesheet" href="style.css">
+    <script>
+        if (localStorage.getItem('theme') === 'light') document.documentElement.setAttribute('data-theme', 'light');
+    </script>
+</head>
+<body style="justify-content: center; align-items: center;">
+
+    <div class="form-card" style="width: 100%; text-align: center;">
+        <h2 style="color: var(--danger-color); margin-bottom: 20px;">🛡️ Admin Portal Access</h2>
+        <form onsubmit="handleAdminLogin(event)">
+            <div class="form-group" style="text-align: left;">
+                <label for="adminId">Admin Username</label>
+                <input type="text" id="adminId" placeholder="Enter admin ID (e.g., admin)" required>
+            </div>
+            <div class="form-group" style="text-align: left;">
+                <label for="adminPass">Password</label>
+                <input type="password" id="adminPass" placeholder="Enter password (e.g., 1234)" required>
+            </div>
+            <button type="submit" class="form-btn" style="background: var(--danger-color);">Secure Login</button>
+        </form>
+        <div style="margin-top: 20px;">
+            <a href="index.html" style="color: var(--text-muted); font-size: 0.9rem; text-decoration: none;">&lt;&lt; Back to Client Site</a>
+        </div>
+    </div>
+
+    <script>
+        function handleAdminLogin(e) {
+            e.preventDefault();
+            const id = document.getElementById('adminId').value;
+            const pass = document.getElementById('adminPass').value;
+            
+            // Dummy validation - oru cheriya roast: ithilum valiya security ninakku ariyaamallo!
+            if(id === 'admin' && pass === '1234') {
+                window.location.href = "admin-dashboard.html";
+            } else {
+                alert("Invalid Admin Credentials!");
+            }
+        }
+    </script>
+</body>
+</html>

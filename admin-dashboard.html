@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <aside class="sidebar">
+        <div class="logo-area">
+            <h2 style="color: var(--danger-color);">🛡️ Admin Panel</h2>
+            <ul class="nav-links">
+                <li class="active"><a href="admin-dashboard.html">📈 Dashboard</a></li>
+                <li><a href="admin-users.html">👥 Users List</a></li>
+                <li><a href="admin-threats.html">🚨 Threat Logs</a></li>
+                <li><a href="admin-feedbacks.html">⭐ Feedbacks</a></li>
+            </ul>
+        </div>
+        <ul class="sidebar-bottom">
+            <li><a href="admin-login.html">🚪 Logout</a></li>
+        </ul>
+    </aside>
+
+    <main class="main-content">
+        <div class="header">
+            <h1>System Overview</h1>
+            <p>PhishGuard AI Global Analytics</p>
+        </div>
+
+        <div style="display: flex; gap: 20px; margin-bottom: 30px;">
+            <div class="scanner-container" style="flex: 1; text-align: center; margin-bottom: 0;">
+                <h3 style="color: var(--text-muted);">Total Scans</h3>
+                <h1 id="totalScans" style="font-size: 2.5rem; margin-top: 10px; color: var(--accent-color);">0</h1>
+            </div>
+            <div class="scanner-container" style="flex: 1; text-align: center; margin-bottom: 0;">
+                <h3 style="color: var(--text-muted);">Phishing Blocked</h3>
+                <h1 id="threatsBlocked" style="font-size: 2.5rem; margin-top: 10px; color: var(--danger-color);">0</h1>
+            </div>
+        </div>
+    </main>
+
+    <script>
+        window.onload = function() {
+            let history = JSON.parse(localStorage.getItem('scanHistory')) || [];
+            document.getElementById('totalScans').innerText = history.length;
+            
+            let threats = history.filter(item => item.status === 'danger').length;
+            document.getElementById('threatsBlocked').innerText = threats;
+        }
+    </script>
+</body>
+</html>

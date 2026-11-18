@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin - User Management</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <aside class="sidebar">
+        <div class="logo-area">
+            <h2 style="color: var(--danger-color);">🛡️ Admin Panel</h2>
+            <ul class="nav-links">
+                <li><a href="admin-dashboard.html">📈 Dashboard</a></li>
+                <li class="active"><a href="admin-users.html">👥 Users List</a></li>
+                <li><a href="admin-threats.html">🚨 Threat Logs</a></li>
+                <li><a href="admin-feedbacks.html">⭐ Feedbacks</a></li>
+            </ul>
+        </div>
+        <ul class="sidebar-bottom">
+            <li><a href="admin-login.html">🚪 Logout</a></li>
+        </ul>
+    </aside>
+
+    <main class="main-content">
+        <div class="header">
+            <h1>Registered Users</h1>
+            <p>Manage accounts created on the platform.</p>
+        </div>
+
+        <div class="history-list" id="usersContainer"></div>
+    </main>
+
+    <script>
+        window.onload = function() {
+            const container = document.getElementById('usersContainer');
+            const savedName = localStorage.getItem('accountName');
+            const savedId = localStorage.getItem('accountIdentifier');
+            
+            if (savedName && savedId) {
+                container.innerHTML = `
+                    <div class="history-item safe" style="cursor: default;">
+                        <div>
+                            <span style="font-size: 0.8rem; color: var(--safe-color); font-weight: bold; display: block; margin-bottom: 4px;">[ACTIVE USER]</span>
+                            <span class="link-text">${savedName} (${savedId})</span>
+                        </div>
+                        <button class="filter-btn" style="background: var(--danger-color); color: white; border: none;">Ban User</button>
+                    </div>
+                `;
+            } else {
+                container.innerHTML = `<p style="color: var(--text-muted);">No users registered yet in local storage.</p>`;
+            }
+        }
+    </script>
+</body>
+</html>

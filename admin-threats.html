@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin - Threat Logs</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <aside class="sidebar">
+        <div class="logo-area">
+            <h2 style="color: var(--danger-color);">🛡️ Admin Panel</h2>
+            <ul class="nav-links">
+                <li><a href="admin-dashboard.html">📈 Dashboard</a></li>
+                <li><a href="admin-users.html">👥 Users List</a></li>
+                <li class="active"><a href="admin-threats.html">🚨 Threat Logs</a></li>
+                <li><a href="admin-feedbacks.html">⭐ Feedbacks</a></li>
+            </ul>
+        </div>
+        <ul class="sidebar-bottom">
+            <li><a href="admin-login.html">🚪 Logout</a></li>
+        </ul>
+    </aside>
+
+    <main class="main-content">
+        <div class="header">
+            <h1>Global Threat Activity</h1>
+            <p>All scanned threats flagged by the AI globally.</p>
+        </div>
+
+        <div class="history-list" id="threatsContainer"></div>
+    </main>
+
+    <script>
+        window.onload = function() {
+            const container = document.getElementById('threatsContainer');
+            let history = JSON.parse(localStorage.getItem('scanHistory')) || [];
+            
+            // Only show threats for admin
+            let threats = history.filter(item => item.status === 'danger');
+
+            if (threats.length === 0) {
+                container.innerHTML = `<p style="color: var(--text-muted);">No threats detected yet.</p>`;
+                return;
+            }
+
+            threats.forEach(item => {
+                const div = document.createElement('div');
+                div.className = `history-item danger`;
+                div.style.cursor = 'default';
+                let content = item.content.length > 80 ? item.content.substring(0, 80) + '...' : item.content;
+
+                div.innerHTML = `
+                    <div>
+                        <span style="font-size: 0.8rem; color: var(--danger-color); font-weight: bold; display: block; margin-bottom: 4px;">[${item.type.toUpperCase()}] DETECTED</span>
+                        <span class="link-text">${content}</span>
+                    </div>
+                    <div class="timestamp">${item.dateStr} • ${item.timeStr}</div>
+                `;
+                container.appendChild(div);
+            });
+        }
+    </script>
+</body>
+</html>

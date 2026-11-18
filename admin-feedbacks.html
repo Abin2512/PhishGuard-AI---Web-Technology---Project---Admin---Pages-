@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin - Feedbacks</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <aside class="sidebar">
+        <div class="logo-area">
+            <h2 style="color: var(--danger-color);">🛡️ Admin Panel</h2>
+            <ul class="nav-links">
+                <li><a href="admin-dashboard.html">📈 Dashboard</a></li>
+                <li><a href="admin-users.html">👥 Users List</a></li>
+                <li><a href="admin-threats.html">🚨 Threat Logs</a></li>
+                <li class="active"><a href="admin-feedbacks.html">⭐ Feedbacks</a></li>
+            </ul>
+        </div>
+        <ul class="sidebar-bottom">
+            <li><a href="admin-login.html">🚪 Logout</a></li>
+        </ul>
+    </aside>
+
+    <main class="main-content">
+        <div class="header">
+            <h1>User Feedbacks & Ratings</h1>
+            <p>Review what users are saying about PhishGuard AI.</p>
+        </div>
+
+        <div class="history-list" id="adminFeedbackContainer"></div>
+    </main>
+
+    <script>
+        window.onload = function() {
+            const container = document.getElementById('adminFeedbackContainer');
+            let feedbackList = JSON.parse(localStorage.getItem('userFeedbacks')) || [];
+
+            if (feedbackList.length === 0) {
+                container.innerHTML = `<p style="color: var(--text-muted);">No user feedbacks received yet.</p>`;
+                return;
+            }
+
+            feedbackList.forEach(item => {
+                let starsHTML = '★'.repeat(item.stars) + '☆'.repeat(5 - item.stars);
+                const div = document.createElement('div');
+                div.className = 'history-item safe';
+                div.style.cursor = 'default';
+                div.innerHTML = `
+                    <div>
+                        <span style="font-size: 0.8rem; color: #f59e0b; font-weight: bold; display: block; margin-bottom: 2px;">${starsHTML} (${item.user})</span>
+                        <span class="link-text" style="font-size: 0.95rem;">"${item.comment}"</span>
+                    </div>
+                    <div class="timestamp">${item.dateStr} • ${item.timeStr}</div>
+                `;
+                container.appendChild(div);
+            });
+        }
+    </script>
+</body>
+</html>
