@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PhishGuard AI - Admin Login</title>
+    <link rel="stylesheet" href="style.css">
+    <script>
+        if (localStorage.getItem('theme') === 'light') document.documentElement.setAttribute('data-theme', 'light');
+    </script>
+</head>
+<body style="justify-content: center; align-items: center;">
+
+    <div class="form-card" style="width: 100%; text-align: center;">
+        <h2 style="color: var(--danger-color); margin-bottom: 20px;">🛡️ Admin Portal Access</h2>
+        <form id="adminLoginForm" onsubmit="handleAdminLogin(event)" novalidate>
+            
+            <!-- Error Message Box -->
+            <div id="errorBox" style="display: none; background: rgba(239, 68, 68, 0.1); border-left: 4px solid var(--danger-color); color: var(--danger-color); padding: 12px; border-radius: 6px; margin-bottom: 15px; font-weight: 500; font-size: 0.9rem; text-align: left; line-height: 1.5;">
+            </div>
+
+            <div class="form-group" style="text-align: left;">
+                <label for="adminId">Admin Username</label>
+                <input type="text" id="adminId" placeholder="e.g., admin" required>
+            </div>
+            <div class="form-group" style="text-align: left;">
+                <label for="adminPass">Password</label>
+                <input type="password" id="adminPass" placeholder="Enter secure password" required>
+            </div>
+            <button type="submit" class="form-btn" style="background: var(--danger-color);">Secure Login</button>
+        </form>
+        
+        <div style="margin-top: 20px;">
+            <!-- Note: GitHub Link aakkiyathukond ivideyum relative/absolute path correct aakkiyillel error varum -->
+            <a href="https://abin2512.github.io/PhishGuard-AI---Web-Technology---Project-/Client_Pages/account.html" style="color: var(--text-muted); font-size: 0.9rem; text-decoration: none;">&lt;&lt; Back to Client Site</a>
+        </div>
+    </div>
+
+    <script>
+        function handleAdminLogin(e) {
+            e.preventDefault();
+            
+            const id = document.getElementById('adminId').value.trim();
+            const pass = document.getElementById('adminPass').value.trim();
+            const errorBox = document.getElementById('errorBox');
+            
+            // Reset error box
+            errorBox.style.display = 'none';
+            errorBox.innerHTML = '';
+            
+            let errors = [];
+
+            // --- 1. Admin Username Validation ---
+            if (!id) {
+                errors.push("⚠️ Admin Username is required.");
+            } else {
+                if (id.length < 4) {
+                    errors.push("⚠️ Username must be at least 4 characters long.");
+                }
+                if (/\s/.test(id)) {
+                    errors.push("⚠️ Username cannot contain spaces.");
+                }
+                // Optional: Special characters check
+                if (!/^[a-zA-Z0-9_]+$/.test(id)) {
+                    errors.push("⚠️ Username can only contain letters, numbers, and underscores.");
+                }
+            }
+
+            // --- 2. Password Validation ---
+            if (!pass) {
+                errors.push("⚠️ Password is required.");
+            } else {
+                if (pass.length < 6) {
+                    errors.push("⚠️ Password must be at least 6 characters long.");
+                }
+            }
+
+            // --- 3. Show Errors if any ---
+            if (errors.length > 0) {
+                errorBox.innerHTML = errors.join('<br>');
+                errorBox.style.display = 'block';
+                return; // Stop execution
+            }
+            
+            // --- Success / Authentication Check ---
+            // Admin dummy login check
+            if(id === 'admin' && pass === 'Admin@1234') {
+                // Correct password aayal dashboard-il povum
+                window.location.href = "admin-dashboard.html";
+            } else {
+                // Thettaya password aayal error box-il kaanikkum
+                errorBox.innerHTML = "❌ Invalid Admin Username or Password!";
+                errorBox.style.display = 'block';
+            }
+        }
+    </script>
+</body>
+</html>
